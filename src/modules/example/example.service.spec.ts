@@ -74,5 +74,16 @@ describe('ExampleService', () => {
       );
       expect(repositoryMock.save).not.toHaveBeenCalled();
     });
+    it('should throw when birth is not a valid date', async () => {
+      const dto = {
+        name: 'some example',
+        birth: '01201-20201',
+      } as any;
+
+      await expect(service.create(dto)).rejects.toEqual(
+        new BadRequestException('"birth" is an invalid date'),
+      );
+      expect(repositoryMock.save).not.toHaveBeenCalled();
+    });
   });
 });

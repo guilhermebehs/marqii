@@ -16,6 +16,8 @@ export class ExampleService {
   ): Promise<CreatExampleResponseDto> {
     if (!createDto.name) throw new BadRequestException('"name" is required');
     if (!createDto.birth) throw new BadRequestException('"birth" is required');
+    if (new Date(createDto.birth).toString() === 'Invalid Date')
+      throw new BadRequestException('"birth" is an invalid date');
 
     const result = await this.exampleRepository.save({
       name: createDto.name,
